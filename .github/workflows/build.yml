@@ -25,7 +25,6 @@ jobs:
           sudo chmod -R +x . && \
           ./build.sh
           
-          
       - uses: fastai/workflows/ssh@master
         with:
           ssh_key: ${{ secrets.SSH_KEY }}
