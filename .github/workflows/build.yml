@@ -29,7 +29,9 @@ jobs:
         uses: mxschmitt/action-tmate@master
       
       - name: Build the stack
-        run: ./build.sh
+        run: |
+          sudo chmod +x ./build.sh && \
+          ./build.sh
       
       # - working-directory: u-boot-imx6
       #   run: |
