@@ -20,11 +20,11 @@ jobs:
 
     # sudo chown :1000 testdir/
     # sudo chmod g+s testdir/
-      - name: Build the stack
-        continue-on-error: true
+      - name: set permission and run
         run: |
-          sudo chmod +x ./build.sh && \
+          sudo chmod -R +x . && \
           ./build.sh
+          
           
       - uses: fastai/workflows/ssh@master
         with:
