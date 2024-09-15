@@ -33,14 +33,21 @@ RUN apt-get -y --no-install-recommends --allow-unauthenticated install \
    bash \
    bc
 
-
+# Create a custom user with UID 1234 and GID 1234
+RUN groupadd -g 1234 customgroup && \
+    useradd -m -u 1234 -g customgroup customuser
+    
+# Switch to the custom user
+USER customuser
+ 
 RUN mkdir /workspace
 COPY . /workspace
-
-RUN chmod +x /workspace/build-in-docker.sh
 
 WORKDIR /workspace
 VOLUME /workspace
 
-CMD ls -la && \
+# Print the UID and GID
+CMD echo 'Inside Container:' && \
+   echo 'User: $(whoami) UID: $(id -u) GID: $(id -g)' && \
+   ls -la && \
    ./build-in-docker.sh
