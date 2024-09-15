@@ -20,18 +20,19 @@ jobs:
 
     # sudo chown :1000 testdir/
     # sudo chmod g+s testdir/
+    # continue-on-error: true
       - name: set permission and run
         run: |
           sudo chmod -R +x . && \
           ./build.sh
           
-      - uses: fastai/workflows/ssh@master
-        with:
-          ssh_key: ${{ secrets.SSH_KEY }}
-          key_file: id_ecdsa
+      # - uses: fastai/workflows/ssh@master
+      #   with:
+      #     ssh_key: ${{ secrets.SSH_KEY }}
+      #     key_file: id_ecdsa
           
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@master
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@master
       
       # - working-directory: u-boot-imx6
       #   run: |
@@ -52,21 +53,3 @@ jobs:
       #     artifacts: "u-boot-imx6/dist/u-boot-imx6-${{ github.ref_name }}.zip"
       #     allowUpdates: true
       #     token: ${{ secrets.GITHUB_TOKEN }}
-
-
-# cd u-boot-imx6
-# export CROSS_COMPILE=aarch64-none-elf-
-# # optionally add options to configs/mx6cuboxi_defconfig
-# make mx6cuboxi_defconfig
-# # optionally configure u-boot graphically
-# # make menuconfig
-# make
-
-# git clone --branch v2018.01-solidrun-imx6 https://github.com/SolidRun/u-boot.git u-boot-imx6
-# cd u-boot-imx6
-# export CROSS_COMPILE=<Set toolchain prefix to your toolchain>
-# # optionally add options to configs/mx6cuboxi_defconfig
-# make mx6cuboxi_defconfig
-# # optionally configure u-boot graphically
-# # make menuconfig
-# make
