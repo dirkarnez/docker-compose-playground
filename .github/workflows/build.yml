@@ -20,6 +20,12 @@ jobs:
 
     # sudo chown :1000 testdir/
     # sudo chmod g+s testdir/
+      - name: Build the stack
+        continue-on-error: true
+        run: |
+          sudo chmod +x ./build.sh && \
+          ./build.sh
+          
       - uses: fastai/workflows/ssh@master
         with:
           ssh_key: ${{ secrets.SSH_KEY }}
@@ -27,11 +33,6 @@ jobs:
           
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@master
-      
-      - name: Build the stack
-        run: |
-          sudo chmod +x ./build.sh && \
-          ./build.sh
       
       # - working-directory: u-boot-imx6
       #   run: |
