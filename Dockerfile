@@ -43,4 +43,4 @@ WORKDIR /workspace
 VOLUME /workspace
 
 CMD ls -la && \
-   ./makeimage.sh
+   ./build-in-docker.sh
