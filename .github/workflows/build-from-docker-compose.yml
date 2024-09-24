@@ -15,16 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      # - run: |
-      #     sudo chown -R runner:docker ./
-
-    # sudo chown :1000 testdir/
-    # sudo chmod g+s testdir/
     # continue-on-error: true
       - name: set permission and run
         run: |
           sudo chmod -R +x . && \
-          ./build.sh
+          mkdir -p dist && \
+          ls && \
+          docker compose up --build && docker compose down
           
       # - uses: fastai/workflows/ssh@master
       #   with:
@@ -34,22 +31,16 @@ jobs:
       # - name: Setup tmate session
       #   uses: mxschmitt/action-tmate@master
       
-      # - working-directory: u-boot-imx6
-      #   run: |
-      #     mkdir dist && \
-      #     mv _SPL ./dist/SPL && \
-      #     mv 123.txt ./dist
-
-      # - name: Archive Release
-      #   uses: thedoctor0/zip-release@master
-      #   with:
-      #     type: 'zip'
-      #     directory: "u-boot-imx6/dist"
-      #     filename: "u-boot-imx6-${{ github.ref_name }}.zip"
-        
-      # - name: Release prebuilt
-      #   uses: ncipollo/release-action@v1
-      #   with:
-      #     artifacts: "u-boot-imx6/dist/u-boot-imx6-${{ github.ref_name }}.zip"
-      #     allowUpdates: true
-      #     token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          directory: "dist"
+          filename: "docker-compose-playground-${{ github.ref_name }}.zip"
+          
+      - name: Release prebuilt
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/docker-compose-playground-${{ github.ref_name }}.zip"
+          allowUpdates: true
+          token: ${{ secrets.GITHUB_TOKEN }}
